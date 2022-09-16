@@ -21,10 +21,7 @@ public class DetailCashFlowActivity extends AppCompatActivity {
     private ActivityDetailCashFlowBinding binding;
     private Utils util;
     private DatabaseHelper dbHelper;
-    private MyAdapter adapter;
-
-    ArrayList<String> tanggal, nominal, keterangan, kategori;
-    ArrayList<KeuanganModel> keuanganArrayList;
+    private ArrayList<KeuanganModel> keuanganArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +33,9 @@ public class DetailCashFlowActivity extends AppCompatActivity {
 
         keuanganArrayList = new ArrayList<>();
 
-        tanggal = new ArrayList<>();
-        nominal = new ArrayList<>();
-        keterangan = new ArrayList<>();
-        kategori = new ArrayList<>();
-
         storeDataInArrays();
 
-        adapter = new MyAdapter(DetailCashFlowActivity.this, keuanganArrayList);
+        MyAdapter adapter = new MyAdapter(DetailCashFlowActivity.this, keuanganArrayList);
 
         binding.rvKeuangan.setAdapter(adapter);
         binding.rvKeuangan.setLayoutManager(new LinearLayoutManager(
