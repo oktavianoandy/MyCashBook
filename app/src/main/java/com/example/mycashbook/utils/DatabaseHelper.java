@@ -62,7 +62,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor readAllData() {
-        String query = "SELECT * FROM " + TABLE_KEUANGAN;
+        String query = "SELECT * FROM " + TABLE_KEUANGAN
+                + " ORDER BY " + COLUMN_ID_KEUANGAN
+                + " DESC ";
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -74,16 +77,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getRangkumanKeuangan(String kategori) {
         String result = "0";
-        String query = "SELECT SUM(nominal) AS total FROM keuangan where kategori = '" + kategori + "'" ;
+        String query = "SELECT SUM(nominal) AS total FROM keuangan where kategori = '" + kategori + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             if (cursor.moveToFirst()) {
-                if (cursor.isNull(0)){
+                if (cursor.isNull(0)) {
                     result = "0";
-                }else{
+                } else {
                     result = cursor.getString(0);
                 }
             }
