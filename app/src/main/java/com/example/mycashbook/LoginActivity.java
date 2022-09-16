@@ -62,9 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         String username = Preferences.getKeyUsername(getApplicationContext());
         String password = Preferences.getKeyPassword(getApplicationContext());
 
-        Log.i("USERNAME", "checkAuth: " + username);
-        Log.i("PASSWORD", "checkAuth: " + password);
-
         if (!binding.etUsername.getText().toString().equals(username)
                 || !binding.etPassword.getText().toString().equals(password)){
             Toast.makeText(getApplicationContext(), "Username atau Password tidak sesuai"

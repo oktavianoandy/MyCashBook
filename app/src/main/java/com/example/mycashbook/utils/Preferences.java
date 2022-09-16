@@ -8,7 +8,7 @@ public class Preferences {
 
     static final String KEY_USERNAME ="USERNAME";
     static final String KEY_PASSWORD = "PASSWORD";
-    static final String KEY_IS_FIRST_TIME = "YES";
+    static final String KEY_IS_FIRST_TIME = "IS_FIRST_TIME";
 
     private static SharedPreferences getSharedPreference(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context);
