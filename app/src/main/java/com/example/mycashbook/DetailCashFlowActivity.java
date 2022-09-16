@@ -3,13 +3,13 @@ package com.example.mycashbook;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.mycashbook.databinding.ActivityDetailCashFlowBinding;
+import com.example.mycashbook.models.KeuanganModel;
 import com.example.mycashbook.utils.DatabaseHelper;
 import com.example.mycashbook.utils.MyAdapter;
 import com.example.mycashbook.utils.Utils;
@@ -24,6 +24,7 @@ public class DetailCashFlowActivity extends AppCompatActivity {
     private MyAdapter adapter;
 
     ArrayList<String> tanggal, nominal, keterangan, kategori;
+    ArrayList<KeuanganModel> keuanganArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,9 @@ public class DetailCashFlowActivity extends AppCompatActivity {
         util = new Utils();
 
         dbHelper = new DatabaseHelper(DetailCashFlowActivity.this);
+
+        keuanganArrayList = new ArrayList<>();
+
         tanggal = new ArrayList<>();
         nominal = new ArrayList<>();
         keterangan = new ArrayList<>();
@@ -39,13 +43,7 @@ public class DetailCashFlowActivity extends AppCompatActivity {
 
         storeDataInArrays();
 
-        adapter = new MyAdapter(
-                DetailCashFlowActivity.this,
-                this,
-                tanggal,
-                nominal,
-                keterangan,
-                kategori);
+        adapter = new MyAdapter(DetailCashFlowActivity.this, keuanganArrayList);
 
         binding.rvKeuangan.setAdapter(adapter);
         binding.rvKeuangan.setLayoutManager(new LinearLayoutManager(
@@ -66,10 +64,19 @@ public class DetailCashFlowActivity extends AppCompatActivity {
             binding.tvEmpty.setVisibility(View.VISIBLE);
         }else{
             while (cursor.moveToNext()){
-                tanggal.add(cursor.getString(1));
-                nominal.add(cursor.getString(2));
-                keterangan.add(cursor.getString(3));
-                kategori.add(cursor.getString(4));
+                int id_keuangan = cursor.getInt(0);
+                String tanggal = cursor.getString(1);
+                double nominal = Double.parseDouble(cursor.getString(2));
+                String nominal_str = util.setFormatRupiah(nominal);
+                String keterangan = cursor.getString(3);
+                String kategori = cursor.getString(4);
+
+                keuanganArrayList.add(new KeuanganModel(id_keuangan,
+                        tanggal,
+                        nominal_str,
+                        keterangan,
+                        kategori));
+
             }
             binding.imEmpty.setVisibility(View.GONE);
             binding.tvEmpty.setVisibility(View.GONE);

@@ -5,15 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Utils {
 
@@ -27,14 +25,11 @@ public class Utils {
         Calendar newCalendar = Calendar.getInstance();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                String date = dateFormatter.format(newDate.getTime());
-                et.setText(date);
-            }
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, (datePicker, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            String date = dateFormatter.format(newDate.getTime());
+            et.setText(date);
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -64,7 +59,7 @@ public class Utils {
 
                     Locale local = new Locale("id", "id");
                     String replaceable = String.format("[Rp,.\\s]",
-                            NumberFormat.getCurrencyInstance().getCurrency()
+                            Objects.requireNonNull(NumberFormat.getCurrencyInstance().getCurrency())
                                     .getSymbol(local));
                     String cleanString = s.toString().replaceAll(replaceable,
                             "");

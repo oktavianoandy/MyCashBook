@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -73,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public String getRangkumanKeuangan(String kategori) {
-        String result = "";
+        String result = "0";
         String query = "SELECT SUM(nominal) AS total FROM keuangan where kategori = '" + kategori + "'" ;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -81,7 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         while(cursor.moveToNext()){
             if (cursor.moveToFirst()) {
-                result = cursor.getString(0);
+                if (cursor.isNull(0)){
+                    result = "0";
+                }else{
+                    result = cursor.getString(0);
+                }
             }
         }
 
