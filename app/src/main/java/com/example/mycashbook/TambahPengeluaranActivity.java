@@ -82,5 +82,9 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(TambahPengeluaranActivity.this);
         dbHelper.addKeuangan(tanggal, nominal, keterangan, kategori);
 
+        binding.etTanggalPengeluaran.setText("");
+        binding.etNominalPengeluaran.setText("");
+        binding.etKeteranganPengeluaran.setText("");
+
     }
 }

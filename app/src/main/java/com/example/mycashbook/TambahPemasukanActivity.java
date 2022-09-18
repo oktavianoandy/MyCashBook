@@ -85,5 +85,9 @@ public class TambahPemasukanActivity extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(TambahPemasukanActivity.this);
         dbHelper.addKeuangan(tanggal, nominal, keterangan, kategori);
 
+        binding.etTanggalPemasukan.setText("");
+        binding.etNominalPemasukan.setText("");
+        binding.etKeteranganPemasukan.setText("");
+
     }
 }
